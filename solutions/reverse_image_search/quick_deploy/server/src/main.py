@@ -9,7 +9,7 @@ from encode import Resnet50
 from milvus_helpers import MilvusHelper
 from mysql_helpers import MySQLHelper
 from config import TOP_K, UPLOAD_PATH
-from operations.load import do_load
+from operations.load import do_load, do_load_v2
 from operations.upload import do_upload
 from operations.search import do_search
 from operations.count import do_count
@@ -67,7 +67,7 @@ class Item(BaseModel):
 async def load_images(item: Item):
     # Insert all the image under the file path to Milvus/MySQL
     try:
-        total_num = do_load(item.Table, item.File, MODEL, MILVUS_CLI, MYSQL_CLI)
+        total_num = do_load_v2(item.Table, item.File, MODEL, MILVUS_CLI, MYSQL_CLI)
         LOGGER.info(f"Successfully loaded data, total count: {total_num}")
         return "Successfully loaded data!"
     except Exception as e:

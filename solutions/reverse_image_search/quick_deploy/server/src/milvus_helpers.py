@@ -19,7 +19,6 @@ class MilvusHelper:
             LOGGER.debug(f"Successfully connect to Milvus with IP:{MILVUS_HOST} and PORT:{MILVUS_PORT}")
         except Exception as e:
             LOGGER.error(f"Failed to connect Milvus: {e}")
-            sys.exit(1)
 
     def set_collection(self, collection_name):
         try:
@@ -29,7 +28,6 @@ class MilvusHelper:
                 raise Exception(f"There is no collection named:{collection_name}")
         except Exception as e:
             LOGGER.error(f"Failed to load data to Milvus: {e}")
-            sys.exit(1)
 
     def has_collection(self, collection_name):
         # Return if Milvus has the collection
@@ -37,7 +35,6 @@ class MilvusHelper:
             return utility.has_collection(collection_name)
         except Exception as e:
             LOGGER.error(f"Failed to load data to Milvus: {e}")
-            sys.exit(1)
 
     def create_collection(self, collection_name):
         # Create milvus collection if not exists
@@ -54,7 +51,6 @@ class MilvusHelper:
             return "OK"
         except Exception as e:
             LOGGER.error(f"Failed to load data to Milvus: {e}")
-            sys.exit(1)
 
     def insert(self, collection_name, vectors):
         # Batch insert vectors to milvus collection
@@ -70,7 +66,6 @@ class MilvusHelper:
             return ids
         except Exception as e:
             LOGGER.error(f"Failed to load data to Milvus: {e}")
-            sys.exit(1)
 
     def create_index(self, collection_name):
         # Create IVF_FLAT index on milvus collection
@@ -86,7 +81,6 @@ class MilvusHelper:
                 raise Exception(status.message)
         except Exception as e:
             LOGGER.error(f"Failed to create index: {e}")
-            sys.exit(1)
 
     def delete_collection(self, collection_name):
         # Delete Milvus collection
@@ -97,7 +91,6 @@ class MilvusHelper:
             return "ok"
         except Exception as e:
             LOGGER.error(f"Failed to drop collection: {e}")
-            sys.exit(1)
 
     def search_vectors(self, collection_name, vectors, top_k):
         # Search vector in milvus collection
@@ -111,7 +104,6 @@ class MilvusHelper:
             return res
         except Exception as e:
             LOGGER.error(f"Failed to search vectors in Milvus: {e}")
-            sys.exit(1)
 
     def count(self, collection_name):
         # Get the number of milvus collection
@@ -122,4 +114,3 @@ class MilvusHelper:
             return num
         except Exception as e:
             LOGGER.error(f"Failed to count vectors in Milvus: {e}")
-            sys.exit(1)

@@ -35,7 +35,6 @@ class MultiprocessHandler(logging.FileHandler):
         self.suffix = self.when_dict.get(when)
         if not self.suffix:
             print('The specified date interval unit is invalid: ', self.when)
-            sys.exit(1)
 
         self.filefmt = os.path.join('.', "logs", f"{self.prefix}-{self.suffix}.log")
 
@@ -48,7 +47,6 @@ class MultiprocessHandler(logging.FileHandler):
         except Exception as e:
             print('Failed to create log file: ', e)
             print("log_path：" + self.filePath)
-            sys.exit(1)
 
         if codecs is None:
             encoding = None

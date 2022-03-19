@@ -35,7 +35,22 @@ class MySQLHelper():
             LOGGER.debug(f"MYSQL create table: {table_name} with sql: {sql}")
         except Exception as e:
             LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
-            sys.exit(1)
+
+    def search_by_image_paths(self, table_name, image_paths):
+        self.test_connection()
+        paths = []
+        for path in image_paths:
+            paths.append(str(path, 'utf-8'))
+        str_ids = str(paths).replace('[', '').replace(']', '')
+        sql = "select image_path from " + table_name + " where image_path in (" + str_ids + ");"
+        try:
+            self.cursor.execute(sql)
+            results = self.cursor.fetchall()
+            results = [res[0] for res in results]
+            LOGGER.debug("MYSQL search by image paths.")
+            return results
+        except Exception as e:
+            LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
 
     def load_data_to_mysql(self, table_name, data):
         # Batch insert (Milvus_ids, img_path) to mysql
@@ -47,7 +62,6 @@ class MySQLHelper():
             LOGGER.debug(f"MYSQL loads data to table: {table_name} successfully")
         except Exception as e:
             LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
-            sys.exit(1)
 
     def search_by_milvus_ids(self, ids, table_name):
         # Get the img_path according to the milvus ids
@@ -62,7 +76,6 @@ class MySQLHelper():
             return results
         except Exception as e:
             LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
-            sys.exit(1)
 
     def delete_table(self, table_name):
         # Delete mysql table if exists
@@ -73,7 +86,6 @@ class MySQLHelper():
             LOGGER.debug(f"MYSQL delete table:{table_name}")
         except Exception as e:
             LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
-            sys.exit(1)
 
     def delete_all_data(self, table_name):
         # Delete all the data in mysql table
@@ -85,7 +97,6 @@ class MySQLHelper():
             LOGGER.debug(f"MYSQL delete all data in table:{table_name}")
         except Exception as e:
             LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
-            sys.exit(1)
 
     def count_table(self, table_name):
         # Get the number of mysql table
@@ -98,4 +109,3 @@ class MySQLHelper():
             return results[0][0]
         except Exception as e:
             LOGGER.error(f"MYSQL ERROR: {e} with sql: {sql}")
-            sys.exit(1)

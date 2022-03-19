@@ -39,7 +39,6 @@ def extract_features(img_dir, model):
         return feats, names
     except Exception as e:
         LOGGER.error(f"Error with extracting feature from image {e}")
-        sys.exit(1)
 
 
 # Combine the id of the vector and the name of the image into a list
@@ -61,3 +60,25 @@ def do_load(table_name, image_dir, model, milvus_client, mysql_cli):
     mysql_cli.create_mysql_table(table_name)
     mysql_cli.load_data_to_mysql(table_name, format_data(ids, names))
     return len(ids)
+
+
+def do_load_v2(table_name, image_dir, model, milvus_client, mysql_cli):
+    if not table_name:
+        table_name = DEFAULT_TABLE
+    vectors, names = extract_features(image_dir, model)
+    image_paths = mysql_cli.search_by_image_paths(table_name, names)
+    image_paths_set = set(image_paths)
+    vectors_filtered, names_filtered = [], []
+    for i in range(len(names)):
+        if not image_paths_set.__contains__(str(names[i], 'utf-8')):
+            vectors_filtered.append(vectors[i])
+            names_filtered.append(names[i])
+
+    if len(vectors_filtered) == 0:
+        return 0
+    ids = milvus_client.insert(table_name, vectors_filtered)
+    milvus_client.create_index(table_name)
+    mysql_cli.create_mysql_table(table_name)
+    mysql_cli.load_data_to_mysql(table_name, format_data(ids, names_filtered))
+    return len(ids)
+

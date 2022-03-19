@@ -16,4 +16,3 @@ def do_upload(table_name, img_path, model, milvus_client, mysql_cli):
         return ids[0]
     except Exception as e:
         LOGGER.error(f"Error with upload : {e}")
-        sys.exit(1)

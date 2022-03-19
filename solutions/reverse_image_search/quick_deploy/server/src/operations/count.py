@@ -15,4 +15,3 @@ def do_count(table_name, milvus_cli):
         return num
     except Exception as e:
         LOGGER.error(f"Error with count table {e}")
-        sys.exit(1)

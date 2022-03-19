@@ -13,8 +13,8 @@ TOP_K = int(os.getenv("TOP_K", "10"))
 MYSQL_HOST = os.getenv("MYSQL_HOST", "127.0.0.1")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
 MYSQL_USER = os.getenv("MYSQL_USER", "root")
-MYSQL_PWD = os.getenv("MYSQL_PWD", "123456")
-MYSQL_DB = os.getenv("MYSQL_DB", "mysql")
+MYSQL_PWD = os.getenv("MYSQL_PWD", "")
+MYSQL_DB = os.getenv("MYSQL_DB", "lehman_test")
 
 ############### Data Path ###############
 UPLOAD_PATH = os.getenv("UPLOAD_PATH", "tmp/search-images")

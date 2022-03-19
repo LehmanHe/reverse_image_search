@@ -17,4 +17,3 @@ def do_search(table_name, img_path, top_k, model, milvus_client, mysql_cli):
         return paths, distances
     except Exception as e:
         LOGGER.error(f"Error with search : {e}")
-        sys.exit(1)

@@ -16,4 +16,3 @@ def do_drop(table_name, milvus_cli, mysql_cli):
         return status
     except Exception as e:
         LOGGER.error(f"Error with drop table: {e}")
-        sys.exit(1)
