@@ -7,7 +7,7 @@ VECTOR_DIMENSION = int(os.getenv("VECTOR_DIMENSION", "1000"))
 INDEX_FILE_SIZE = int(os.getenv("INDEX_FILE_SIZE", "1024"))
 METRIC_TYPE = os.getenv("METRIC_TYPE", "L2")
 DEFAULT_TABLE = os.getenv("DEFAULT_TABLE", "milvus_img_search")
-TOP_K = int(os.getenv("TOP_K", "10"))
+TOP_K = int(os.getenv("TOP_K", "30"))
 
 ############### MySQL Configuration ###############
 MYSQL_HOST = os.getenv("MYSQL_HOST", "127.0.0.1")
